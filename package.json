@@ -1,0 +1,24 @@
+{
+  "name": "node_learn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fionaVg1/node_learn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fionaVg1/node_learn/issues"
+  },
+  "homepage": "https://github.com/fionaVg1/node_learn#readme",
+  "devDependencies": {
+    "net": "^1.0.2",
+    "nodejs-websocket": "^1.7.2"
+  }
+}

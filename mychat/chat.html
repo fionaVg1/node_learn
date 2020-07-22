@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天客户端1</title>
+    <style>
+        .chatContent{
+            width: 100px;
+            height: 300px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+   <div id="chatContent"></div> 
+   <input type="text" id="input"/><button id='sendMsg'>发送</button>
+   <script>
+       //装饰者模式
+       var arrayProto = Array.prototype;
+       var arrayMethod = Object.create(arrayProto);
+       var ws = new WebSocket('ws:127.0.0.1:4000');
+       var localchat = [];
+       arrayMethod.push  = function(){
+           var original = arrayProto.push;
+           var _result = original.apply(this,arguments);
+           var _html = "";
+           localchat.forEach((msg)=>{
+               _html += msg.username+':';
+               _html += msg.text+'<br/>';
+           })
+           document.getElementById('chatContent').innerHTML = _html;
+           return _result;
+       }
+       localchat.__proto__ = arrayMethod;
+       var username = Math.random();
+       ws.onopen = function(){      
+           ws.send(JSON.stringify({
+               username:username,
+               message:''
+           }));
+       };
+       ws.onmessage = function(data){
+        localchat.push(JSON.parse(data.data));
+       }
+       document.getElementById('sendMsg').onclick = function(e){
+           var msg = document.getElementById('input').value;        
+           ws.send(JSON.stringify({
+               username:username,
+               message:msg
+           }));
+       }
+   </script>
+</body>
+</html>
