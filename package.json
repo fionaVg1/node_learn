@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/fionaVg1/node_learn#readme",
   "devDependencies": {
+    "koa": "^2.13.0",
+    "koa-router": "^9.1.0",
     "net": "^1.0.2",
     "nodejs-websocket": "^1.7.2"
+  },
+  "dependencies": {
+    "koa-session": "^6.0.0"
   }
 }
