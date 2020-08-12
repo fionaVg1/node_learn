@@ -13,6 +13,7 @@ function asyncAdd(a,b,callback) {
   /**
    * 请在此方法中调用asyncAdd方法，完成数值计算
    * @param  {...any} rest 传入的参数
+   * 该方法耗时6s
    */
   async function sum(...rest) {
     // 请在此处完善代码
