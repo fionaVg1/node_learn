@@ -27,6 +27,8 @@
     "nodejs-websocket": "^1.7.2"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "express-fileupload": "^1.2.0",
     "koa-session": "^6.0.0",
     "node-fetch": "^2.6.1"
   }

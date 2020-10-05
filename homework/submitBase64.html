@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./index.css" rel="stylesheet">
+</head>
+<body>
+    <h2>HTML Forms</h2>
+    <div class="row">
+        <label for="file">file:</label>
+        <input type="file" id="file" name="file">
+        <input onclick="submit()" type="submit" value="Submit">
+    </div>
+    <script>
+        let upload = {};
+        function submit(){
+            console.log('here',upload);
+            const formData = new FormData();
+            formData.append('name',upload.name);
+            formData.append('file',upload.data);
+            fetch('/submitBinary',{
+                method:'POST',
+                // body:JSON.stringify(upload),
+                body:JSON.stringify(formData),
+                headers:{
+                    //如果这里设置了content-type会有bugs,因为fetch没有帮忙加boundary
+                    // 'Content-Type':'multipart/form-data'
+                    // 'Content-Type':'application/json'
+                }
+            });            
+        }
+        document.getElementById('file').addEventListener('change',e=>{
+                const files = e.target.files;
+                //File的父类是Blob
+                for(let file of files){
+                    const fr = new FileReader();
+                    fr.readAsDataURL(file);
+                    fr.onload = ()=>{                        
+                        //去掉前面多余的22个字符
+                        //data:image/jpeg;base64
+                        // upload.data = fr.result.substr(22);
+                        upload.file = file;
+                        upload.name = file.name;
+                    }
+                }
+        });
+    </script>
+</body>
+</html>
