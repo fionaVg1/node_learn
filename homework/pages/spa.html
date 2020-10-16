@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a{
+            color: skyblue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>单页面应用实例</h2>
+    <div id="content"></div>
+    <ul>
+        <li><a onclick='route("/products")'>列表</a></li>
+        <li><a onclick='route("/product/123")'>详情</a></li>
+    </ul>
+    <script>
+        function pageList(){
+            const html = `
+            <ul>
+                <li>Apple</li>
+                <li>TicTok</li>
+                <li>Alibaba</li>
+            </ul>
+            `
+            document.getElementById('content').innerHTML = html;
+        }
+        function pageDetail(){
+            document.getElementById('content').innerHTML = "Detail";
+        }
+        const pages = [
+            {
+                match:/\/products/,
+                route:pageList
+
+            },
+            {
+                match:/\/product\/\d+/,
+                route:pageDetail
+
+            }
+        ];
+        function mathchRoute(pages,url){
+            const page = pages.find(page=>page.match.test(url))
+            page.route();
+        }
+        function route(url){
+            history.pushState(null,null,url);
+            mathchRoute(pages,window.location.href);
+        }
+        //回退时触发
+        window.onpopstate = function(){
+            mathchRoute(pages,window.location.href);
+        }
+        mathchRoute(pages,window.location.href);
+
+    </script>
+</body>
+</html>
